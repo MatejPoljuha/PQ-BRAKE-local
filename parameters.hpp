@@ -15,5 +15,5 @@ const NTL::ZZ       q   = NTL::NextPrime(NTL::power(NTL::conv<NTL::ZZ>(2),hr_q))
 const long          N   = NTL::conv<long>(NTL::power(NTL::conv<NTL::ZZ>(2),hr_N));
 const int           sec = 40;
 const NTL::ZZ       B   = NTL::conv<NTL::ZZ>(2)*NTL::conv<NTL::ZZ>(N)*NTL::power(NTL::conv<NTL::ZZ>(2),sec);  //2N*2^sec
-const std::string   hr_B = "2^"+ std::to_string(hr_N+1+sec);
+const std::string   hr_B = "2^"+ std::to_string(hr_N+1+sec);    // used just for printing
 const long          p   = 2;
