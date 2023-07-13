@@ -1,4 +1,9 @@
- # Requirements:
- - OpenSSL library (https://github.com/openssl/openssl)
- - NTL library (https://libntl.org/download.html)
- - Open Quantum Safe liboqs and liboqs-cpp wrapper (https://github.com/open-quantum-safe/liboqs-cpp)
+ # Requirements (tested on Ubuntu-based Linux distro):
+ - OpenSSL
+ - cmake
+ - astyle
+ - gcc
+ - ninja-build
+ - unzip
+ - xsltproc
+ - valgrind
