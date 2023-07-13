@@ -8,7 +8,7 @@
  * However, the CRYSTALS-Kyber KEM parameters are fixed as Kyber768 is used.
  * The results are output into a .csv file.
  * @param reference_fingerprint grayscale .pgm image of a fingerprint that is "enrolled" into the fuzzy vault
- * @param query_fingerprint grayscale .pgm image of a fingerprint that is compared to the "enrolled" fingerprint
+ * @param query_fingerprint grayscale .pgm image of a fingerprint that queries the fuzzy vault
  * @author Matej Poljuha
  */
 
@@ -38,9 +38,9 @@ int main(int argc, char **argv)
     ringSetup();
 
     /* check if exactly two arguments are provided */
-    if (argc != 4)
+    if (argc != 3)
     {
-        cout << "ERROR!\nUsage: PQBRAKE <path to image folder> <reference_fingerprint_filename of reference image>.pgm <reference_fingerprint_filename of query image>.pgm" << endl;
+        cout << "ERROR!\nUsage hint: 03_test_PQBRAKE <path to reference image> <path to query image> NOTE: images must be in .pgm format." << endl;
         exit(1);
     }
 
@@ -48,10 +48,14 @@ int main(int argc, char **argv)
      * syntax of output file reference_fingerprint_filename is _referencefilename_.pgm|_queryfilename_.pgm (without '_' symbols)
      */
     ofstream OutputFile;
-    string path_to_images = argv[1], fngp1 = argv[2], fngp2 = argv[3];
-    string reference_fingerprint_path = path_to_images + fngp1, query_fingerprint_path = path_to_images + fngp2;
-    string reference_fingerprint_filename = fngp1.substr(0, fngp1.find_last_of('.'));
-    string query_fingerprint_filename = fngp2.substr(0, fngp2.find_last_of('.'));
+    //string path_to_images = argv[1],
+    //string reference_fingerprint_path = path_to_images + reference_fingerprint_raw_arg, query_fingerprint_path = path_to_images + query_fingerprint_raw_arg;
+    string reference_fingerprint_path = argv[1];
+    string query_fingerprint_path = argv[2];
+    string reference_fingerprint_filename = reference_fingerprint_path.substr(reference_fingerprint_path.find_last_of('/')+1, reference_fingerprint_path.find_last_of('.')-reference_fingerprint_path.find_last_of('/')-1);;
+    string query_fingerprint_filename = query_fingerprint_path.substr(query_fingerprint_path.find_last_of('/')+1, query_fingerprint_path.find_last_of('.')-query_fingerprint_path.find_last_of('/')-1);;
+    cout << setw(23) << "Reference fingerprint: " << reference_fingerprint_filename << "\n";
+    cout << setw(23) << "Query fingerprint: " << query_fingerprint_filename << "\n";
     OutputFile.open("./logs/PQBRAKE_results.csv", fstream::app);
 
     /* hardcoded values for varying the size of the secret polynomial k */
@@ -83,7 +87,7 @@ int main(int argc, char **argv)
                 //-------------------------------
 
         /* a fuzzy vault is created, temporarily with secret size=10 (overriden later) */
-        FuzzyVaultBrake vault(mcytWidth, mcytHeight, mcytDpi, 10);
+        ProtectedMinutiaeTemplate vault(mcytWidth, mcytHeight, mcytDpi);
         cout << "Degree of secret polynomial: " << i << endl;
         vault.setSecretSize(i);     // overrides and sets the size of the secret polynomial
         MinutiaeView ref = getMinutiaeView(reference_fingerprint_path);      // processes the raw fingerprint image
@@ -176,7 +180,7 @@ int main(int argc, char **argv)
         }
         else
         {
-            cout << "Failed to unlock the vault with the query " << argv[2] << endl;
+            cout << "Failed to unlock the vault with the query: " << query_fingerprint_filename << endl;
         }
 
         unlock_timings[iter] = std::chrono::duration<float, std::milli>(unlock_timer_end - unlock_timer_start).count();
@@ -276,7 +280,14 @@ int main(int argc, char **argv)
 
         /* compares hashes of shared secrets */
         if (hashSHA256(shared_secret_serverside) == hashSHA256(shared_secret_clientside))
-            cout << "Established shared secret: " << hashSHA256(shared_secret_serverside) << endl;
+            cout << "RESULT: Verification successful, established shared secret: " << hashSHA256(shared_secret_clientside) << endl;
+        else
+        {
+            cout << "RESULT: Verification failed, shared secrets do not match." << endl;
+            printPQBRAKEresultToFile(OutputFile, reference_fingerprint_filename, query_fingerprint_filename, "verification_failed", empty_timings, empty_timings, empty_timings, empty_timings, empty_timings, empty_timings, empty_timings);
+            OutputFile.close();
+            exit(1);
+        }
         cout << "-------------------------------------------------------------------------------------------\n";
         if (!warmup_run)
             iter++;
@@ -287,7 +298,7 @@ int main(int argc, char **argv)
     printPQBRAKEresultToFile(OutputFile,
                              reference_fingerprint_filename,
                              query_fingerprint_filename,
-                             "success",
+                             "verification_success",
                              preprocessing_timings,
                              lock_timings,
                              unlock_timings,

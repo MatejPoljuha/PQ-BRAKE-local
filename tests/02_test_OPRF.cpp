@@ -27,7 +27,6 @@ int main() {
     Evaluator evaluator_machine;
 
     ofstream log_failed_OPRF_iterations;
-    log_failed_OPRF_iterations.open("./logs/01_failed_OPRF_iterations_details.txt");
 
     printParameters();
     /* prints expected failure rate of any one OPRF iteration,
@@ -91,6 +90,7 @@ int main() {
             timings.push_back(std::chrono::duration<double, std::milli>(OPRF_timer_end - OPRF_timer_start).count());
         } catch (int exc) {
             /* notes a failed OPRF  */
+            log_failed_OPRF_iterations.open("./logs/01_failed_OPRF_iterations_details.txt");
             OPRF_fail_counter++;
         }
         iter++;

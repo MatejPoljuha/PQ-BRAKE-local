@@ -40,13 +40,20 @@ cd ../../../../../
 sudo mv fjfx_all.h /usr/local/include/fjfx/all.h
 
 # install NTL
-
+gunzip ntl-11.5.1.tar.gz
+tar xf ntl-11.5.1.tar
+cd ntl-11.5.1/src
+./configure
+make
+make check
+sudo make install
 
 # install modified liboqs C library
-
-
-# install liboqs C++ wrapper
-
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+git clone --depth=1 https://github.com/MatejPoljuha/liboqs-PQ-BRAKE
+cmake -S liboqs -B liboqs/build -DBUILD_SHARED_LIBS=ON
+cmake --build liboqs/build --parallel 8
+cmake --build liboqs/build --target install
 
 # clean installation
 cd ..
