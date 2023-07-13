@@ -40,9 +40,8 @@ cd ../../../../../
 sudo mv fjfx_all.h /usr/local/include/fjfx/all.h
 
 # install NTL
-gunzip ntl-11.5.1.tar.gz
-tar xf ntl-11.5.1.tar
-cd ntl-11.5.1/src
+git clone https://github.com/libntl/ntl
+cd ntl/src
 ./configure
 make
 make check
