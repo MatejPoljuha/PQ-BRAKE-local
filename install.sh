@@ -49,10 +49,11 @@ sudo make install
 
 # install modified liboqs C library
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-git clone --depth=1 https://github.com/MatejPoljuha/liboqs-PQ-BRAKE
-cmake -S liboqs -B liboqs/build -DBUILD_SHARED_LIBS=ON
-cmake --build liboqs/build --parallel 8
-cmake --build liboqs/build --target install
+git clone -b main https://github.com/MatejPoljuha/liboqs-PQ-BRAKE
+cd liboqs
+mkdir build && cd build
+cmake -GNinja ..
+ninja install
 
 # clean installation
 cd ..
