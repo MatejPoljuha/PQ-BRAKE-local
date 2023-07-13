@@ -1,5 +1,6 @@
  # Requirements (tested on Ubuntu-based Linux distro):
  - OpenSSL
+ - libssl-dev
  - cmake
  - astyle
  - gcc
@@ -7,3 +8,4 @@
  - unzip
  - xsltproc
  - valgrind
+ - gmp

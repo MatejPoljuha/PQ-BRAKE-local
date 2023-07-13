@@ -46,11 +46,12 @@ cd ntl/src
 make
 make check
 sudo make install
+cd ../../
 
 # install modified liboqs C library
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 git clone -b main https://github.com/MatejPoljuha/liboqs-PQ-BRAKE
-cd liboqs
+cd liboqs-PQ-BRAKE
 mkdir build && cd build
 cmake -GNinja ..
 ninja install
