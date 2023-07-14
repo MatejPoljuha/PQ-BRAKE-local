@@ -48,15 +48,13 @@ int main(int argc, char **argv)
      * syntax of output file reference_fingerprint_filename is _referencefilename_.pgm|_queryfilename_.pgm (without '_' symbols)
      */
     ofstream OutputFile;
-    //string path_to_images = argv[1],
-    //string reference_fingerprint_path = path_to_images + reference_fingerprint_raw_arg, query_fingerprint_path = path_to_images + query_fingerprint_raw_arg;
     string reference_fingerprint_path = argv[1];
     string query_fingerprint_path = argv[2];
     string reference_fingerprint_filename = reference_fingerprint_path.substr(reference_fingerprint_path.find_last_of('/')+1, reference_fingerprint_path.find_last_of('.')-reference_fingerprint_path.find_last_of('/')-1);;
     string query_fingerprint_filename = query_fingerprint_path.substr(query_fingerprint_path.find_last_of('/')+1, query_fingerprint_path.find_last_of('.')-query_fingerprint_path.find_last_of('/')-1);;
     cout << setw(23) << "Reference fingerprint: " << reference_fingerprint_filename << "\n";
     cout << setw(23) << "Query fingerprint: " << query_fingerprint_filename << "\n";
-    OutputFile.open("./logs/PQBRAKE_results.csv", fstream::app);
+    OutputFile.open("PQBRAKE_results.csv", fstream::app);
 
     /* hardcoded values for varying the size of the secret polynomial k */
     int polynomial_sizes[] = {6,6,8,10,12,14,16};

@@ -66,4 +66,5 @@ mkdir build
 cd build
 cmake ..
 make
+sudo cp ../tests/logs_template/PQBRAKE_results.csv .
 cd ..
