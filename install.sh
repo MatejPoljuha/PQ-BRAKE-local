@@ -52,12 +52,12 @@ cd ../../
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 git clone -b main https://github.com/MatejPoljuha/liboqs-PQ-BRAKE
 cd liboqs-PQ-BRAKE
-mkdir build && cd build
-cmake -GNinja ..
-ninja install
+sudo mkdir build && cd build
+sudo cmake -GNinja ..
+sudo ninja install
 
 # clean installation
-cd ..
+cd ../../../
 sudo rm -r tmp
 
 # build the app

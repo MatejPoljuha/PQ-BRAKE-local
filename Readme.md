@@ -9,3 +9,4 @@
  - xsltproc
  - valgrind
  - gmp
+ - m4
