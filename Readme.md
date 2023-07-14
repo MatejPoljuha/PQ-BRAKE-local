@@ -8,5 +8,5 @@
  - unzip
  - xsltproc
  - valgrind
- - gmp
+ - libgmp-dev (GNU mp Bignum)
  - m4

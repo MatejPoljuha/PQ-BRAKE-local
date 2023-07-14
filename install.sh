@@ -36,15 +36,16 @@ make
 cd ../../../dist/Linux-x86_64/x64/
 sudo cp libFRFXLL_static.a /usr/local/lib/libFRFXLL.a
 sudo cp libFJFX_static.a /usr/local/lib/libFJFX.a
-cd ../../../../../
-sudo mv fjfx_all.h /usr/local/include/fjfx/all.h
+cd ../../../libFJFX/include/
+sudo cp FJFX.h /usr/local/include/fjfx/all.h
+cd ../../../../
 
 # install NTL
 git clone https://github.com/libntl/ntl
 cd ntl/src
 ./configure
 make
-make check
+# make check
 sudo make install
 cd ../../
 
