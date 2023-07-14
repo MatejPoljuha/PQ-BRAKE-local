@@ -1,5 +1,6 @@
 /**
- * Parameters common to all OPRF calculations
+ * @file parameters.hpp
+ * @brief Parameters common to all OPRF calculations
  */
 #pragma once
 

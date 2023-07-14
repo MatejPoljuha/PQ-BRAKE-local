@@ -1,6 +1,6 @@
 /**
- * \file common.h
- * \brief Type definitions and utility functions
+ * @file common.h
+ * @brief Type definitions and utility functions
  */
 
 #ifndef COMMON_H_
